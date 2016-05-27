@@ -151,24 +151,24 @@ _italic text_
 
         private void btnLessThan_Click(object sender, EventArgs e)
         {
-            rhContent.SelectedText = "&lt";
+            rhContent.SelectedText = "&lt;";
         }
 
         private void btnGreaterThan_Click(object sender, EventArgs e)
         {
-            rhContent.SelectedText = "&gt";
+            rhContent.SelectedText = "&gt;";
 
         }
 
         private void btnAnd_Click(object sender, EventArgs e)
         {
-            rhContent.SelectedText = "&amp";
+            rhContent.SelectedText = "&amp;";
 
         }
 
         private void btnQuot_Click(object sender, EventArgs e)
         {
-            rhContent.SelectedText = "&quot";
+            rhContent.SelectedText = "&quot;";
 
         }
 
@@ -471,7 +471,7 @@ _italic text_
 
         }
 
-       async private void Form1_Load(object sender, EventArgs e)
+        async private void Form1_Load(object sender, EventArgs e)
         {
             try
             {
@@ -490,6 +490,7 @@ _italic text_
 
             }
         }
+
     }
     class Messages
     {

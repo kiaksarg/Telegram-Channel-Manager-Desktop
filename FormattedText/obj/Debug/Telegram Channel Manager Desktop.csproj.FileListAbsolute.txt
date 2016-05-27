@@ -19,3 +19,18 @@ C:\Users\Kiaksarg\documents\visual studio 2015\Projects\FormattedText\FormattedT
 C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Debug\FormattedText.exe.config
 C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\obj\Debug\FormattedText.exe
 C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\obj\Debug\FormattedText.pdb
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Debug\FormattedText.exe
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Debug\FormattedText.pdb
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Debug\RestSharp.dll
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Debug\Telegram.Bot.dll
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Debug\RestSharp.xml
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Debug\System.Net.Http.Formatting.xml
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Debug\Telegram.Bot.xml
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\obj\Debug\Telegram Channel Manager Desktop.csprojResolveAssemblyReference.cache
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\obj\Debug\FormattedText.frmAbout.resources
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\obj\Debug\FormattedText.Form1.resources
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\obj\Debug\FormattedText.Properties.Resources.resources
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\obj\Debug\Telegram Channel Manager Desktop.csproj.GenerateResource.Cache
