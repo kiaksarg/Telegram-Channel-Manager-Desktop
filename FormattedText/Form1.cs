@@ -56,7 +56,7 @@ _italic text_
 
                 MessageBox.Show(ex.Message);
             }
-
+            pbSend.Visible = false;
 
         }
 
