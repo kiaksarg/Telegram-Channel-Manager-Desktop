@@ -756,6 +756,7 @@
             this.pastToolStripMenuItem.Name = "pastToolStripMenuItem";
             this.pastToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.pastToolStripMenuItem.Text = "Paste";
+            this.pastToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // Form1
             // 
