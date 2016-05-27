@@ -93,7 +93,6 @@
             this.pbSendFile = new System.Windows.Forms.PictureBox();
             this.LblFileName = new System.Windows.Forms.Label();
             this.GetMessages = new System.Windows.Forms.Timer(this.components);
-            this.pastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.grpMarkdownEditor.SuspendLayout();
@@ -500,7 +499,6 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveToolStripMenuItem,
             this.openToolStripMenuItem,
-            this.pastToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -751,13 +749,6 @@
             this.GetMessages.Interval = 100000;
             this.GetMessages.Tick += new System.EventHandler(this.GetMessages_Tick);
             // 
-            // pastToolStripMenuItem
-            // 
-            this.pastToolStripMenuItem.Name = "pastToolStripMenuItem";
-            this.pastToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
-            this.pastToolStripMenuItem.Text = "Paste";
-            this.pastToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -865,7 +856,6 @@
         private System.Windows.Forms.RichTextBox txtCaption;
         private System.Windows.Forms.Timer GetMessages;
         private System.Windows.Forms.LinkLabel lblMessage;
-        private System.Windows.Forms.ToolStripMenuItem pastToolStripMenuItem;
     }
 }
 

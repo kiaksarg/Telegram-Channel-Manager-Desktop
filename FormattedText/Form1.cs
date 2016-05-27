@@ -7,7 +7,6 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,20 +15,6 @@ namespace FormattedText
 {
     public partial class Form1 : Form
     {
-        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Winapi)]
-        internal static extern IntPtr GetFocus();
-
-        private Control GetFocusedControl()
-        {
-            Control focusedControl = null;
-            // To get hold of the focused control:
-            IntPtr focusedHandle = GetFocus();
-            if (focusedHandle != IntPtr.Zero)
-                // Note that if the focused Control is not a .Net control, then this will return null.
-                focusedControl = Control.FromHandle(focusedHandle);
-            return focusedControl;
-        }
-
         string MessageURL = "www.introducing.ir";
         public static readonly List<string>
             ImageExtensions = new List<string>
@@ -44,8 +29,7 @@ namespace FormattedText
         public Form1()
         {
             InitializeComponent();
-            rhContent.AddContextMenu();
-            txtCaption.AddContextMenu();
+
             txtMarkdownSample.Text = @"*bold text*
 _italic text_
 [introducing](http://introducing.ir/)
@@ -375,8 +359,7 @@ _italic text_
                     _FileToSend.Content = new FileStream(path, FileMode.Open);
                     _FileToSend.Filename = Path.GetFileName(path);
                     pbSendFile.Visible = true;
-                    var r = 
-                        await Bot.SendVideo(txtChannelId.Text, _FileToSend, 0, txtCaption.Text, chSendFileIsSilent.Checked);
+                    var r = await Bot.SendVideo(txtChannelId.Text, _FileToSend, 0, txtCaption.Text);
 
                 }
                 else if (rdoSendAudio.Checked)
@@ -387,7 +370,7 @@ _italic text_
                     pbSendFile.Visible = true;
                     var r = await
                         Bot.SendAudio(txtChannelId.Text, _FileToSend, 0,
-                        txtAudioPerformer.Text, txtAudioTitle.Text, chSendFileIsSilent.Checked);
+                        txtAudioPerformer.Text, txtAudioTitle.Text, chIsSilent.Checked);
                 }
 
             }
@@ -508,46 +491,6 @@ _italic text_
             }
         }
 
-        private void pastToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pasteCaptionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (Clipboard.ContainsText())
-            {
-                txtCaption.Text
-                    += Clipboard.GetText(TextDataFormat.Text).ToString();
-            }
-        }
-
-        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-            if (Clipboard.ContainsText())
-            {
-                var FocusedControl = GetFocusedControl();
-
-                if (FocusedControl != null)
-                    switch (FocusedControl.GetType().Name)
-                    {
-                        case "RichTextBox":
-                            {
-                                var RichTextBox = FocusedControl as RichTextBox;
-                                RichTextBox.Paste();
-                                break;
-                            }
-                        case "TextBox":
-                            {
-                                var TextBox = FocusedControl as TextBox;
-                                TextBox.Paste();
-                                break;
-                            }
-
-                    }
-            }
-        }
     }
     class Messages
     {
