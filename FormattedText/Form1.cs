@@ -50,7 +50,6 @@ _italic text_
                 Telegram.Bot.Api Bot = new Api(txtBotToken.Text);
                 pbSend.Visible = true;
                 await Bot.SendTextMessage(txtChannelId.Text, rhContent.Text, false, chIsSilent.Checked, 0, null, (rdoDefault.Checked == true) ? Telegram.Bot.Types.ParseMode.Default : (rdoHtml.Checked == true) ? Telegram.Bot.Types.ParseMode.Html : Telegram.Bot.Types.ParseMode.Markdown);
-                pbSend.Visible = false;
             }
             catch (Exception ex)
             {
