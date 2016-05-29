@@ -70,6 +70,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.txtBotToken = new System.Windows.Forms.TextBox();
@@ -93,7 +94,6 @@
             this.pbSendFile = new System.Windows.Forms.PictureBox();
             this.LblFileName = new System.Windows.Forms.Label();
             this.GetMessages = new System.Windows.Forms.Timer(this.components);
-            this.pastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.grpMarkdownEditor.SuspendLayout();
@@ -522,6 +522,13 @@
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
+            // pastToolStripMenuItem
+            // 
+            this.pastToolStripMenuItem.Name = "pastToolStripMenuItem";
+            this.pastToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.pastToolStripMenuItem.Text = "Paste";
+            this.pastToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+            // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
@@ -540,7 +547,7 @@
             this.groupBox3.Size = new System.Drawing.Size(260, 109);
             this.groupBox3.TabIndex = 24;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Identities";
+            this.groupBox3.Text = "identification ";
             // 
             // txtBotToken
             // 
@@ -750,13 +757,6 @@
             this.GetMessages.Enabled = true;
             this.GetMessages.Interval = 100000;
             this.GetMessages.Tick += new System.EventHandler(this.GetMessages_Tick);
-            // 
-            // pastToolStripMenuItem
-            // 
-            this.pastToolStripMenuItem.Name = "pastToolStripMenuItem";
-            this.pastToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
-            this.pastToolStripMenuItem.Text = "Paste";
-            this.pastToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // Form1
             // 
