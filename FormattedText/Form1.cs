@@ -7,7 +7,6 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,20 +15,6 @@ namespace FormattedText
 {
     public partial class Form1 : Form
     {
-        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Winapi)]
-        internal static extern IntPtr GetFocus();
-
-        private Control GetFocusedControl()
-        {
-            Control focusedControl = null;
-            // To get hold of the focused control:
-            IntPtr focusedHandle = GetFocus();
-            if (focusedHandle != IntPtr.Zero)
-                // Note that if the focused Control is not a .Net control, then this will return null.
-                focusedControl = Control.FromHandle(focusedHandle);
-            return focusedControl;
-        }
-
         string MessageURL = "www.introducing.ir";
         public static readonly List<string>
             ImageExtensions = new List<string>
@@ -44,8 +29,7 @@ namespace FormattedText
         public Form1()
         {
             InitializeComponent();
-            rhContent.AddContextMenu();
-            txtCaption.AddContextMenu();
+
             txtMarkdownSample.Text = @"*bold text*
 _italic text_
 [introducing](http://introducing.ir/)
@@ -58,21 +42,65 @@ _italic text_
 <code>inline fixed-width code</code>
 <pre>pre-formatted fixed-width code block</pre>";
         }
+        public Telegram.Bot.Types.ReplyMarkups.InlineKeyboardMarkup GetInlineKeyboardMarkup()
+        {
+            Telegram.Bot.Types.ReplyMarkups.InlineKeyboardMarkup mk = new Telegram.Bot.Types.ReplyMarkups.InlineKeyboardMarkup();
+            int col = int.Parse(txtCol.Text);
 
+            int row = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(Convert.ToDouble(UrlBttons.Count) / col)));
+            Telegram.Bot.Types.InlineKeyboardButton[][] keyboard =
+               new Telegram.Bot.Types.InlineKeyboardButton[row][];
+
+
+            int ocupied = 0;
+            int counter = 0;
+            int Maincounter = 0;
+
+            for (int i = 0; i < row; i++)
+            {
+                int tmp = (UrlBttons.Count - ocupied >= col) ? col : UrlBttons.Count - ocupied;
+                ocupied += tmp;
+                var TmpStringArry = new Telegram.Bot.Types.InlineKeyboardButton[tmp];
+
+                for (int j = 0; j < tmp; j++)
+                {
+                    TmpStringArry[counter] = new Telegram.Bot.Types.InlineKeyboardButton();
+                    TmpStringArry[counter].Text = UrlBttons[i].Text;
+                    TmpStringArry[counter++].Url = UrlBttons[i].Url;
+
+                    if (counter == col || j == tmp - 1)
+                    {
+                        keyboard[Maincounter++] = TmpStringArry;
+                        counter = 0;
+                    }
+                }
+
+
+            }
+
+            mk.InlineKeyboard = keyboard;
+
+            return mk;
+        }
         async private void btn_send_Click(object sender, EventArgs e)
         {
             try
             {
-                Telegram.Bot.Api Bot = new Api(txtBotToken.Text);
+
+
+
+                TelegramBotClient Bot = new TelegramBotClient(txtBotToken.Text);
+
                 pbSend.Visible = true;
-                await Bot.SendTextMessage(txtChannelId.Text, rhContent.Text, false, chIsSilent.Checked, 0, null, (rdoDefault.Checked == true) ? Telegram.Bot.Types.ParseMode.Default : (rdoHtml.Checked == true) ? Telegram.Bot.Types.ParseMode.Html : Telegram.Bot.Types.ParseMode.Markdown);
+                await Bot.SendTextMessageAsync(txtChannelId.Text, rhContent.Text, false, chIsSilent.Checked, 0, (chURLButtons.Checked) ? GetInlineKeyboardMarkup() : null, (rdoDefault.Checked == true) ? Telegram.Bot.Types.Enums.ParseMode.Default : (rdoHtml.Checked == true) ? Telegram.Bot.Types.Enums.ParseMode.Html : Telegram.Bot.Types.Enums.ParseMode.Markdown);
+                pbSend.Visible = false;
             }
             catch (Exception ex)
             {
 
                 MessageBox.Show(ex.Message);
             }
-            pbSend.Visible = false;
+
 
         }
 
@@ -167,24 +195,24 @@ _italic text_
 
         private void btnLessThan_Click(object sender, EventArgs e)
         {
-            rhContent.SelectedText = "&lt;";
+            rhContent.SelectedText = "&lt";
         }
 
         private void btnGreaterThan_Click(object sender, EventArgs e)
         {
-            rhContent.SelectedText = "&gt;";
+            rhContent.SelectedText = "&gt";
 
         }
 
         private void btnAnd_Click(object sender, EventArgs e)
         {
-            rhContent.SelectedText = "&amp;";
+            rhContent.SelectedText = "&amp";
 
         }
 
         private void btnQuot_Click(object sender, EventArgs e)
         {
-            rhContent.SelectedText = "&quot;";
+            rhContent.SelectedText = "&quot";
 
         }
 
@@ -214,7 +242,12 @@ _italic text_
                         SendFileMethod =
                         (rdoSendPhoto.Checked) ? (byte)1 :
                         (rdoSendVideo.Checked) ? (byte)2 :
-                        (rdoSendAudio.Checked) ? (byte)3 : (byte)0
+                        (rdoSendAudio.Checked) ? (byte)3 : (byte)0,
+                        Column = txtCol.Text,
+                        SendUrlButton = chURLButtons.Checked,
+                        UrlButtons = UrlBttons,
+                        UrlButtonText = txtInlineKeyboardButtonName.Text,
+                        UrlButtonURL = txtInlineKeyboardButtonUrl.Text
                     };
                     if (sdi.CheckPathExists)
                         using (StreamWriter rw = new StreamWriter(sdi.FileName))
@@ -241,7 +274,7 @@ _italic text_
 
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+   async     private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -294,6 +327,13 @@ _italic text_
                             rdoSendFile.Checked = true;
                             break;
                     }
+                    UrlBttons = (Saved.UrlButtons == null) ? new List<UrlButton>() : Saved.UrlButtons;
+                    txtInlineKeyboardButtonName.Text = (String.IsNullOrEmpty(Saved.UrlButtonText))? "وب سایت معرفی" : Saved.UrlButtonText;
+                    txtInlineKeyboardButtonUrl.Text =(String.IsNullOrEmpty(Saved.UrlButtonURL)) ? "http://introducing.ir/" : Saved.UrlButtonURL;
+                    txtCol.Text= (Saved.Column == null) ? "1" : Saved.Column;
+                    chURLButtons.Checked = Saved.SendUrlButton;
+
+                   await PanelBuildr();
 
                 }
             }
@@ -349,7 +389,7 @@ _italic text_
         {
             try
             {
-                Api Bot = new Api(txtBotToken.Text);
+                TelegramBotClient Bot = new TelegramBotClient(txtBotToken.Text);
                 if (rdoSendFile.Checked)
                 {
                     Telegram.Bot.Types.FileToSend _FileToSend = new Telegram.Bot.Types.FileToSend();
@@ -357,8 +397,8 @@ _italic text_
                     _FileToSend.Filename = Path.GetFileName(path);
                     pbSendFile.Visible = true;
                     var r = await
-                        Bot.SendDocument(txtChannelId.Text, _FileToSend,
-                        txtCaption.Text, chSendFileIsSilent.Checked);
+                        Bot.SendDocumentAsync(txtChannelId.Text, _FileToSend,
+                        txtCaption.Text, chSendFileIsSilent.Checked, 0, (chURLButtons.Checked) ? GetInlineKeyboardMarkup() : null);
                 }
                 else if (rdoSendPhoto.Checked)
                 {
@@ -366,8 +406,8 @@ _italic text_
                     _FileToSend.Content = new FileStream(path, FileMode.Open);
                     _FileToSend.Filename = Path.GetFileName(path);
                     pbSendFile.Visible = true;
-                    var r = await Bot.SendPhoto(txtChannelId.Text, _FileToSend,
-                        txtCaption.Text, chSendFileIsSilent.Checked);
+                    var r = await Bot.SendPhotoAsync(txtChannelId.Text, _FileToSend,
+                        txtCaption.Text, chSendFileIsSilent.Checked, 0, (chURLButtons.Checked) ? GetInlineKeyboardMarkup() : null);
                 }
                 else if (rdoSendVideo.Checked)
                 {
@@ -375,8 +415,7 @@ _italic text_
                     _FileToSend.Content = new FileStream(path, FileMode.Open);
                     _FileToSend.Filename = Path.GetFileName(path);
                     pbSendFile.Visible = true;
-                    var r = 
-                        await Bot.SendVideo(txtChannelId.Text, _FileToSend, 0, txtCaption.Text, chSendFileIsSilent.Checked);
+                    var r = await Bot.SendVideoAsync(txtChannelId.Text, _FileToSend, 0, txtCaption.Text, chSendFileIsSilent.Checked, 0, (chURLButtons.Checked) ? GetInlineKeyboardMarkup() : null);
 
                 }
                 else if (rdoSendAudio.Checked)
@@ -386,8 +425,8 @@ _italic text_
                     _FileToSend.Filename = Path.GetFileName(path);
                     pbSendFile.Visible = true;
                     var r = await
-                        Bot.SendAudio(txtChannelId.Text, _FileToSend, 0,
-                        txtAudioPerformer.Text, txtAudioTitle.Text, chSendFileIsSilent.Checked);
+                        Bot.SendAudioAsync(txtChannelId.Text, _FileToSend, 0,
+                        txtAudioPerformer.Text, txtAudioTitle.Text, chIsSilent.Checked, 0, (chURLButtons.Checked) ? GetInlineKeyboardMarkup() : null);
                 }
 
             }
@@ -508,45 +547,180 @@ _italic text_
             }
         }
 
-        private void pastToolStripMenuItem_Click(object sender, EventArgs e)
-        {
 
-        }
 
-        private void pasteCaptionToolStripMenuItem_Click(object sender, EventArgs e)
+
+
+        List<UrlButton> UrlBttons = new List<UrlButton>();
+        async public Task PanelBuildr()
         {
-            if (Clipboard.ContainsText())
+            panel1.Controls.Clear();
+            int pointX = 35;
+            int pointY = 30;
+            int count = 1;
+            await Task.Run(() =>
             {
-                txtCaption.Text
-                    += Clipboard.GetText(TextDataFormat.Text).ToString();
-            }
-        }
+                foreach (var item in UrlBttons)
+                {
 
-        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-            if (Clipboard.ContainsText())
-            {
-                var FocusedControl = GetFocusedControl();
-
-                if (FocusedControl != null)
-                    switch (FocusedControl.GetType().Name)
+                    try
                     {
-                        case "RichTextBox":
-                            {
-                                var RichTextBox = FocusedControl as RichTextBox;
-                                RichTextBox.Paste();
-                                break;
-                            }
-                        case "TextBox":
-                            {
-                                var TextBox = FocusedControl as TextBox;
-                                TextBox.Paste();
-                                break;
-                            }
+                        //  panel1.AutoScroll = true;
+                        //panel1.BorderStyle = BorderStyle.FixedSingle;
+
+                        //  panel1.Controls.Clear();
+
+
+                        Button btnInlineKeyboardButton = new Button();
+                        // textBox1.SelectionStart = textBox1.Text.Length;
+                        // a.ScrollBars = ScrollBars.Both;
+                        //  a.ScrollToCaret();
+
+                        Label lbl = new Label();
+                        lbl.Name = count.ToString();
+                        lbl.Text = count + "";
+                        lbl.Location = new Point(pointX + 0, pointY);
+                        lbl.Size = new System.Drawing.Size(20, 15);
+
+
+                        //////////////////
+                        Button btn1 = new Button();
+                        btn1.Text = "✖";
+                        btn1.Name = item.Id;
+                        btn1.Location = new Point(pointX + 155, pointY);
+                        btn1.Size = new System.Drawing.Size(30, 30);
+                        btn1.Click += new EventHandler(button_Click);
+
+
+
+                        ////////////
+                        btnInlineKeyboardButton.Size = new System.Drawing.Size(131, 30);
+                        btnInlineKeyboardButton.Text = item.Text;
+                        btnInlineKeyboardButton.Name = $"{item.Id}_btnInlineKeyboardButton";
+                        btnInlineKeyboardButton.Click += btnInlineKeyboardButton_Click;
+                        btnInlineKeyboardButton.Tag = item.Url;
+                        btnInlineKeyboardButton.Location = new Point(pointX + 25, pointY);
+
+
+
+                        ////
+                        LinkLabel lblUrl = new LinkLabel();
+                        lblUrl.Text = item.Url;
+                        lblUrl.Name = count.ToString() + "_lblUrl";
+                        lblUrl.Location = new Point(pointX + 30, pointY + 30);
+                        // lblUrl.Size = new System.Drawing.Size(30, 30);
+                        lblUrl.Click += btnInlineKeyboardButton_Click;
+
+                        ////
+                        Invoke(new MethodInvoker(delegate ()
+                        {
+                            panel1.Controls.Add(btn1);
+                            panel1.Controls.Add(lbl);
+                            panel1.Controls.Add(btnInlineKeyboardButton);
+                            panel1.Controls.Add(lblUrl);
+
+                            panel1.Show();
+                        }));
+
+                        count++;
+
 
                     }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
+                    pointY += 55;
+                }
+            });
+
+        }
+        async private void btnNewButton_Click(object sender, EventArgs e)
+        {
+            btnNewButton.Enabled = false;
+            UrlBttons.Add(new UrlButton()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Text = txtInlineKeyboardButtonName.Text,
+                Url = txtInlineKeyboardButtonUrl.Text
+            });
+            await PanelBuildr();
+            btnNewButton.Enabled = true;
+        }
+        protected void button_Click(object sender, EventArgs e)
+        {
+            Button button = sender as Button;
+
+            UrlBttons.Remove(UrlBttons.SingleOrDefault(x => x.Id == button.Name));
+            PanelBuildr();
+            //Button button = sender as Button;
+            ////to remove control by Name
+            //foreach (Control item in panel1.Controls.OfType<Control>())
+            //{
+            //    if (item.Name.Split('_')[0] == button.Name)
+            //    {
+            //        panel1.Controls.Remove(item);
+            //    }
+
+            //}
+            //foreach (Control item in panel1.Controls.OfType<Control>())
+            //{
+            //    if ( item.Name == button.Name + "_lblUrl")
+            //    {
+            //        panel1.Controls.Remove(item);
+            //    }
+
+            //}
+            //panel1.Controls.Remove(button);
+
+            //// identify which button was clicked and perform necessary actions
+        }
+        protected void btnInlineKeyboardButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                switch (sender.GetType().Name)
+                {
+                    case "Button":
+                        {
+                            Button button = sender as Button;
+
+                            System.Diagnostics.Process.Start((string)button.Tag);
+                            break;
+                        }
+                    case "LinkLabel":
+                        {
+                            LinkLabel LinkLabel = sender as LinkLabel;
+
+                            System.Diagnostics.Process.Start((string)LinkLabel.Text);
+                            break;
+                        }
+
+                }
+
+
             }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        async private void btnDelete_Click(object sender, EventArgs e)
+        {
+
+            if (MessageBox.Show("Are you sure to delete all buttons?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            {
+                UrlBttons.Clear();
+                await PanelBuildr();
+            }
+        }
+
+        private void panel1_Resize(object sender, EventArgs e)
+        {
+            panel1.AutoScrollMinSize = new System.Drawing.Size(panel1.Width, panel1.Height);
+
         }
     }
     class Messages

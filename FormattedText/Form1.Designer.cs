@@ -70,7 +70,6 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.txtBotToken = new System.Windows.Forms.TextBox();
@@ -94,6 +93,17 @@
             this.pbSendFile = new System.Windows.Forms.PictureBox();
             this.LblFileName = new System.Windows.Forms.Label();
             this.GetMessages = new System.Windows.Forms.Timer(this.components);
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.txtCol = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtInlineKeyboardButtonUrl = new System.Windows.Forms.TextBox();
+            this.txtInlineKeyboardButtonName = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.btnNewButton = new System.Windows.Forms.Button();
+            this.chURLButtons = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.grpMarkdownEditor.SuspendLayout();
@@ -104,11 +114,12 @@
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSendFile)).BeginInit();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_send
             // 
-            this.btn_send.Location = new System.Drawing.Point(506, 14);
+            this.btn_send.Location = new System.Drawing.Point(852, 12);
             this.btn_send.Name = "btn_send";
             this.btn_send.Size = new System.Drawing.Size(75, 23);
             this.btn_send.TabIndex = 0;
@@ -211,7 +222,7 @@
             this.tsslSelctedFile});
             this.statusStrip1.Location = new System.Drawing.Point(0, 524);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(615, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(971, 22);
             this.statusStrip1.TabIndex = 10;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -248,7 +259,7 @@
             this.rhContent.Dock = System.Windows.Forms.DockStyle.Top;
             this.rhContent.Location = new System.Drawing.Point(0, 24);
             this.rhContent.Name = "rhContent";
-            this.rhContent.Size = new System.Drawing.Size(615, 197);
+            this.rhContent.Size = new System.Drawing.Size(971, 197);
             this.rhContent.TabIndex = 11;
             this.rhContent.Text = "";
             // 
@@ -463,13 +474,14 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.chURLButtons);
             this.groupBox2.Controls.Add(this.lblMessage);
             this.groupBox2.Controls.Add(this.pbSend);
             this.groupBox2.Controls.Add(this.chIsSilent);
             this.groupBox2.Controls.Add(this.btn_send);
             this.groupBox2.Location = new System.Drawing.Point(7, 481);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(607, 43);
+            this.groupBox2.Size = new System.Drawing.Size(949, 43);
             this.groupBox2.TabIndex = 22;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Send";
@@ -488,7 +500,7 @@
             // pbSend
             // 
             this.pbSend.Image = global::FormattedText.Properties.Resources.ajax_loader;
-            this.pbSend.Location = new System.Drawing.Point(584, 15);
+            this.pbSend.Location = new System.Drawing.Point(930, 13);
             this.pbSend.Name = "pbSend";
             this.pbSend.Size = new System.Drawing.Size(17, 17);
             this.pbSend.TabIndex = 43;
@@ -500,11 +512,10 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveToolStripMenuItem,
             this.openToolStripMenuItem,
-            this.pastToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(615, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(971, 24);
             this.menuStrip1.TabIndex = 23;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -521,13 +532,6 @@
             this.openToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
-            // 
-            // pastToolStripMenuItem
-            // 
-            this.pastToolStripMenuItem.Name = "pastToolStripMenuItem";
-            this.pastToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
-            this.pastToolStripMenuItem.Text = "Paste";
-            this.pastToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -547,7 +551,7 @@
             this.groupBox3.Size = new System.Drawing.Size(260, 109);
             this.groupBox3.TabIndex = 24;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "identification ";
+            this.groupBox3.Text = "Identities";
             // 
             // txtBotToken
             // 
@@ -758,11 +762,124 @@
             this.GetMessages.Interval = 100000;
             this.GetMessages.Tick += new System.EventHandler(this.GetMessages_Tick);
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.btnDelete);
+            this.groupBox5.Controls.Add(this.txtCol);
+            this.groupBox5.Controls.Add(this.panel1);
+            this.groupBox5.Controls.Add(this.label12);
+            this.groupBox5.Controls.Add(this.txtInlineKeyboardButtonUrl);
+            this.groupBox5.Controls.Add(this.txtInlineKeyboardButtonName);
+            this.groupBox5.Controls.Add(this.label10);
+            this.groupBox5.Controls.Add(this.label9);
+            this.groupBox5.Controls.Add(this.btnNewButton);
+            this.groupBox5.Location = new System.Drawing.Point(620, 228);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(339, 252);
+            this.groupBox5.TabIndex = 31;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "URL buttons";
+            // 
+            // txtCol
+            // 
+            this.txtCol.Location = new System.Drawing.Point(239, 16);
+            this.txtCol.Name = "txtCol";
+            this.txtCol.Size = new System.Drawing.Size(21, 20);
+            this.txtCol.TabIndex = 13;
+            this.txtCol.Text = "1";
+            // 
+            // panel1
+            // 
+            this.panel1.AutoScroll = true;
+            this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(3, 69);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(333, 180);
+            this.panel1.TabIndex = 32;
+            this.panel1.Resize += new System.EventHandler(this.panel1_Resize);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(187, 40);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(73, 23);
+            this.btnDelete.TabIndex = 4;
+            this.btnDelete.Text = "Delete All";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(187, 19);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(45, 13);
+            this.label12.TabIndex = 11;
+            this.label12.Text = "Column:";
+            // 
+            // txtInlineKeyboardButtonUrl
+            // 
+            this.txtInlineKeyboardButtonUrl.Location = new System.Drawing.Point(59, 42);
+            this.txtInlineKeyboardButtonUrl.Name = "txtInlineKeyboardButtonUrl";
+            this.txtInlineKeyboardButtonUrl.Size = new System.Drawing.Size(122, 20);
+            this.txtInlineKeyboardButtonUrl.TabIndex = 5;
+            this.txtInlineKeyboardButtonUrl.Text = "http://introducing.ir/";
+            // 
+            // txtInlineKeyboardButtonName
+            // 
+            this.txtInlineKeyboardButtonName.Location = new System.Drawing.Point(59, 16);
+            this.txtInlineKeyboardButtonName.Name = "txtInlineKeyboardButtonName";
+            this.txtInlineKeyboardButtonName.Size = new System.Drawing.Size(122, 20);
+            this.txtInlineKeyboardButtonName.TabIndex = 6;
+            this.txtInlineKeyboardButtonName.Text = "وب سایت معرفی";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(18, 45);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(32, 13);
+            this.label10.TabIndex = 9;
+            this.label10.Text = "URL:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(18, 19);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(38, 13);
+            this.label9.TabIndex = 7;
+            this.label9.Text = "Name:";
+            // 
+            // btnNewButton
+            // 
+            this.btnNewButton.Location = new System.Drawing.Point(263, 40);
+            this.btnNewButton.Name = "btnNewButton";
+            this.btnNewButton.Size = new System.Drawing.Size(73, 23);
+            this.btnNewButton.TabIndex = 8;
+            this.btnNewButton.Text = "New Button";
+            this.btnNewButton.UseVisualStyleBackColor = true;
+            this.btnNewButton.Click += new System.EventHandler(this.btnNewButton_Click);
+            // 
+            // chURLButtons
+            // 
+            this.chURLButtons.AutoSize = true;
+            this.chURLButtons.BackColor = System.Drawing.Color.Red;
+            this.chURLButtons.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.chURLButtons.Location = new System.Drawing.Point(597, 15);
+            this.chURLButtons.Name = "chURLButtons";
+            this.chURLButtons.Size = new System.Drawing.Size(248, 17);
+            this.chURLButtons.TabIndex = 48;
+            this.chURLButtons.Text = "Send URL buttons with files and text messages";
+            this.chURLButtons.UseVisualStyleBackColor = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(615, 546);
+            this.ClientSize = new System.Drawing.Size(971, 546);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -794,6 +911,8 @@
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSendFile)).EndInit();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -865,7 +984,17 @@
         private System.Windows.Forms.RichTextBox txtCaption;
         private System.Windows.Forms.Timer GetMessages;
         private System.Windows.Forms.LinkLabel lblMessage;
-        private System.Windows.Forms.ToolStripMenuItem pastToolStripMenuItem;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox txtCol;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button btnNewButton;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txtInlineKeyboardButtonName;
+        private System.Windows.Forms.TextBox txtInlineKeyboardButtonUrl;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.CheckBox chURLButtons;
     }
 }
 

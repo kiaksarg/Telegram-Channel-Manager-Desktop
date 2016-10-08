@@ -2341,22 +2341,6 @@
             <param name="errorCode">The error code.</param>
             <param name="innerException">The inner exception.</param>
         </member>
-        <member name="T:Telegram.Bot.Helpers.Extensions">
-            <summary>
-            Extension Methods
-            </summary>
-        </member>
-        <member name="M:Telegram.Bot.Helpers.Extensions.FromUnixTime(System.Int64)">
-            <summary>
-              Convert a long into a DateTime
-            </summary>
-        </member>
-        <member name="M:Telegram.Bot.Helpers.Extensions.ToUnixTime(System.DateTime)">
-            <summary>
-              Convert a DateTime into a long
-            </summary>
-            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-        </member>
         <member name="T:Telegram.Bot.Types.Animation">
             <summary>
             This object represents an animation file to be displayed in the message containing a <see cref="T:Telegram.Bot.Types.Game"/>.

@@ -19,5 +19,11 @@ namespace FormattedText
         public byte ParseMode { get; set; }
         public bool IsSilent { get; set; }
         public bool SendFileIsSilent { get; set; }
+        public List<UrlButton> UrlButtons { get; set; }
+        public string UrlButtonText { get; set; }
+        public string UrlButtonURL { get; set; }
+        public string Column { get; set; }
+        public bool SendUrlButton { get; set; }
+
     }
 }
