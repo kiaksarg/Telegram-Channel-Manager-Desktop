@@ -36,6 +36,8 @@ namespace FormattedText
         public string DataDirectoryPath { get; set; }
         public string DataPath { get; set; }
         public string BackupPath { get; set; }
+        public string BackupPath2 { get; set; }
+
         public frmTelegramBot(int id, string dataPath)
         {
             InitializeComponent();
@@ -43,6 +45,8 @@ namespace FormattedText
             DataDirectoryPath = dataPath;
             DataPath = $"{DataDirectoryPath}\\Data.json";
             BackupPath = $"{DataDirectoryPath}\\Backup.json";
+            BackupPath2 = $"{DataDirectoryPath}\\Backup2.json";
+
             if (!Directory.Exists(dataPath))
             {
                 if (!CreateFiles())
@@ -50,6 +54,110 @@ namespace FormattedText
                     return;
                 }
             }
+
+
+            if (!File.Exists(DataPath)) File.WriteAllText(DataPath, JsonConvert.SerializeObject(null));
+            if (!File.Exists(BackupPath)) File.WriteAllText(BackupPath, JsonConvert.SerializeObject(null));
+            if (!File.Exists(BackupPath2)) File.WriteAllText(BackupPath2, JsonConvert.SerializeObject(null));
+
+
+            var Saved = JsonConvert.DeserializeObject<Save>(File.ReadAllText(DataPath));
+
+            if (Saved != null)
+                try
+                {
+
+
+                    txtChannelUserName.Text = Saved.ChannelId;
+                    rhContent.Text = Saved.Content;
+                    txtBotToken.Text = Saved.Token;
+                    path = Saved.SelectedFile;
+
+                    LblFileName.Text = (Saved.SelectedFile == null) ? "..." : (Path.GetFileName(Saved.SelectedFile).Length > 30) ?
+       Path.GetFileName(Saved.SelectedFile).Substring(0, 30) : Path.GetFileName(Saved.SelectedFile);
+
+
+                    tsslSelctedFile.Text = (Saved.SelectedFile == null) ? "..." :
+                        (Saved.SelectedFile.Length < 58) ? Saved.SelectedFile : (Path.GetFileName(Saved.SelectedFile).Length > 58) ?
+                        Path.GetFileName(Saved.SelectedFile).Substring(0, 58) : Path.GetFileName(Saved.SelectedFile);
+
+                    //LblFileName.Text = Path.GetFileName(Saved.SelectedFile);
+                    //tsslSelctedFile.Text = Saved.SelectedFile;
+                    txtAudioTitle.Text = Saved.AudioTitle;
+                    txtAudioPerformer.Text = Saved.AudioPerformer;
+                    txtCaption.Text = Saved.Caption;
+                    chIsSilent.Checked = Saved.IsSilent;
+                    switch (Saved.ParseMode)
+                    {
+                        case 0:
+                            {
+                                rdoHtml.Checked = true;
+                                grpMarkdownEditor.Enabled = true;
+                                gbHtml.Enabled = true;
+                            }
+
+                            break;
+                        case 1:
+                            {
+                                rdoMarkdown.Checked = true;
+                                grpMarkdownEditor.Enabled = true;
+                                gbHtml.Enabled = false;
+                            }
+
+                            break;
+                        default:
+                            {
+                                rdoDefault.Checked = true;
+                                grpMarkdownEditor.Enabled = false;
+                                gbHtml.Enabled = false;
+                            }
+
+                            break;
+                    }
+
+
+                    switch (Saved.SendFileMethod)
+                    {
+                        case 1:
+                            rdoSendPhoto.Checked = true;
+                            break;
+                        case 2:
+                            rdoSendVideo.Checked = true;
+                            break;
+                        case 3:
+                            rdoSendAudio.Checked = true;
+                            break;
+                        default:
+                            rdoSendFile.Checked = true;
+                            break;
+                    }
+                    UrlBttons = (Saved.UrlButtons == null) ? new List<UrlButton>() : Saved.UrlButtons;
+                    txtInlineKeyboardButtonName.Text = (String.IsNullOrEmpty(Saved.UrlButtonText)) ? "وب سایت معرفی" : Saved.UrlButtonText;
+                    txtInlineKeyboardButtonUrl.Text = (String.IsNullOrEmpty(Saved.UrlButtonURL)) ? "http://introducing.ir/" : Saved.UrlButtonURL;
+                    txtCol.Text = (Saved.Column == null) ? "1" : Saved.Column;
+                    chURLButtons.Checked = Saved.SendUrlButton;
+                    offset = Saved.Offset;
+
+
+                    Chats = Saved.Chats ?? new List<Chat>();
+                    buildChatList();
+
+
+
+                    if (string.IsNullOrWhiteSpace(txtCol.Text))
+                    {
+                        txtCol.Text = "1";
+                    }
+                    if (string.IsNullOrWhiteSpace(txtUploadTimeout.Text))
+                    {
+                        txtUploadTimeout.Text = "10";
+                    }
+                }
+                catch (Exception er)
+                {
+
+                    MessageBox.Show("Error - " + er.Message);
+                }
 
         }
         private bool CreateFiles()
@@ -61,6 +169,7 @@ namespace FormattedText
                     Directory.CreateDirectory(DataDirectoryPath);
                     File.WriteAllText(DataPath, JsonConvert.SerializeObject(null));
                     File.WriteAllText(BackupPath, JsonConvert.SerializeObject(null));
+                    File.WriteAllText(BackupPath2, JsonConvert.SerializeObject(null));
 
 
                     return true;
@@ -97,22 +206,23 @@ namespace FormattedText
             for (int i = 0; i < row; i++)
             {
                 int tmp = (UrlBttons.Count - ocupied >= col) ? col : UrlBttons.Count - ocupied;
-                ocupied += tmp;
+
                 var TmpStringArry = new Telegram.Bot.Types.InlineKeyboardButton[tmp];
 
-                for (int j = 0; j < tmp; j++)
+                for (int j = ocupied; j < tmp + ocupied; j++)
                 {
                     TmpStringArry[counter] = new Telegram.Bot.Types.InlineKeyboardButton();
-                    TmpStringArry[counter].Text = UrlBttons[i].Text;
-                    TmpStringArry[counter++].Url = UrlBttons[i].Url;
+                    TmpStringArry[counter].Text = UrlBttons[j].Text;
+                    TmpStringArry[counter++].Url = UrlBttons[j].Url;
 
-                    if (counter == col || j == tmp - 1)
+                    if (counter == col || j == tmp + ocupied - 1)
                     {
                         keyboard[Maincounter++] = TmpStringArry;
                         counter = 0;
                     }
-                }
 
+                }
+                ocupied += tmp;
 
             }
 
@@ -570,7 +680,7 @@ namespace FormattedText
 
         async private void Form1_Load(object sender, EventArgs e)
         {
-
+            await PanelBuildr();
 
             try
             {
@@ -589,104 +699,9 @@ namespace FormattedText
 
             }
 
-            var Saved = JsonConvert.DeserializeObject<Save>(File.ReadAllText(DataPath));
+
             AutoSaveTimer.Enabled = true;
-            if (Saved != null)
-                try
-                {
-
-
-                    txtChannelUserName.Text = Saved.ChannelId;
-                    rhContent.Text = Saved.Content;
-                    txtBotToken.Text = Saved.Token;
-                    path = Saved.SelectedFile;
-
-                    LblFileName.Text = (Saved.SelectedFile == null) ? "..." : (Path.GetFileName(Saved.SelectedFile).Length > 30) ?
-       Path.GetFileName(Saved.SelectedFile).Substring(0, 30) : Path.GetFileName(Saved.SelectedFile);
-
-
-                    tsslSelctedFile.Text = (Saved.SelectedFile == null) ? "..." :
-                        (Saved.SelectedFile.Length < 58) ? Saved.SelectedFile : (Path.GetFileName(Saved.SelectedFile).Length > 58) ?
-                        Path.GetFileName(Saved.SelectedFile).Substring(0, 58) : Path.GetFileName(Saved.SelectedFile);
-
-                    //LblFileName.Text = Path.GetFileName(Saved.SelectedFile);
-                    //tsslSelctedFile.Text = Saved.SelectedFile;
-                    txtAudioTitle.Text = Saved.AudioTitle;
-                    txtAudioPerformer.Text = Saved.AudioPerformer;
-                    txtCaption.Text = Saved.Caption;
-                    chIsSilent.Checked = Saved.IsSilent;
-                    switch (Saved.ParseMode)
-                    {
-                        case 0:
-                            {
-                                rdoHtml.Checked = true;
-                                grpMarkdownEditor.Enabled = true;
-                                gbHtml.Enabled = true;
-                            }
-
-                            break;
-                        case 1:
-                            {
-                                rdoMarkdown.Checked = true;
-                                grpMarkdownEditor.Enabled = true;
-                                gbHtml.Enabled = false;
-                            }
-
-                            break;
-                        default:
-                            {
-                                rdoDefault.Checked = true;
-                                grpMarkdownEditor.Enabled = false;
-                                gbHtml.Enabled = false;
-                            }
-
-                            break;
-                    }
-
-
-                    switch (Saved.SendFileMethod)
-                    {
-                        case 1:
-                            rdoSendPhoto.Checked = true;
-                            break;
-                        case 2:
-                            rdoSendVideo.Checked = true;
-                            break;
-                        case 3:
-                            rdoSendAudio.Checked = true;
-                            break;
-                        default:
-                            rdoSendFile.Checked = true;
-                            break;
-                    }
-                    UrlBttons = (Saved.UrlButtons == null) ? new List<UrlButton>() : Saved.UrlButtons;
-                    txtInlineKeyboardButtonName.Text = (String.IsNullOrEmpty(Saved.UrlButtonText)) ? "وب سایت معرفی" : Saved.UrlButtonText;
-                    txtInlineKeyboardButtonUrl.Text = (String.IsNullOrEmpty(Saved.UrlButtonURL)) ? "http://introducing.ir/" : Saved.UrlButtonURL;
-                    txtCol.Text = (Saved.Column == null) ? "1" : Saved.Column;
-                    chURLButtons.Checked = Saved.SendUrlButton;
-                    offset = Saved.Offset;
-                    await PanelBuildr();
-
-                    Chats = Saved.Chats ?? new List<Chat>();
-                    buildChatList();
-
-
-
-                    if (string.IsNullOrWhiteSpace(txtCol.Text))
-                    {
-                        txtCol.Text = "1";
-                    }
-                    if (string.IsNullOrWhiteSpace(txtUploadTimeout.Text))
-                    {
-                        txtUploadTimeout.Text = "10";
-                    }
-                }
-                catch (Exception er)
-                {
-
-                    MessageBox.Show("Error - " + er.Message);
-                }
-
+            BackupTimer.Enabled = true;
         }
 
 
@@ -1010,7 +1025,7 @@ namespace FormattedText
                     {
                         lstUpdates.Items.Add(e.InnerException.Message);
                     }
-                 //   MessageBox.Show(e.Message);
+                    //   MessageBox.Show(e.Message);
                 }));
 
             }
@@ -1345,7 +1360,7 @@ namespace FormattedText
                     Offset = offset,
                     Chats = Chats
                 };
-
+                
                 if (File.Exists(DataPath))
                     using (var fs = new FileStream(DataPath, FileMode.Create, FileAccess.Write, FileShare.None))
                     {
@@ -1356,7 +1371,8 @@ namespace FormattedText
                     }
                 else
                 {
-                    MessageBox.Show("Data Path does not exist");
+                    if (!File.Exists(DataPath)) File.WriteAllText(DataPath, JsonConvert.SerializeObject(sv));
+
                 }
                 // MessageBox.Show("Your bot and message has been saved sucessfully");
 
@@ -1410,7 +1426,9 @@ namespace FormattedText
             AutoSaveTimer.Stop();
             AutoSaveTimer.Enabled = false;
             AutoSaveTimer.Dispose();
-
+            BackupTimer.Stop();
+            BackupTimer.Enabled = false;
+            BackupTimer.Dispose();
             //Thread.Sleep(1000);
             try
             {
@@ -1440,7 +1458,7 @@ namespace FormattedText
                     Chats = Chats
                 };
                 //     Thread.Sleep(1000);
-                if (File.Exists(DataPath))
+                if (File.Exists(BackupPath))
                 {
                     using (var fs = new FileStream(BackupPath, FileMode.Create, FileAccess.Write, FileShare.None))
                     {
@@ -1449,6 +1467,10 @@ namespace FormattedText
                         fs.Write(bytes, 0, bytes.Length);
                         fs.Flush();
                     }
+
+                }
+                if (File.Exists(DataPath))
+                {
                     using (var fs = new FileStream(DataPath, FileMode.Create, FileAccess.Write, FileShare.None))
                     {
 
@@ -1458,11 +1480,23 @@ namespace FormattedText
                     }
 
                 }
-
                 else
                 {
                     MessageBox.Show("Data Path does not exist");
                 }
+
+                if (File.Exists(BackupPath2))
+                {
+                    using (var fs = new FileStream(BackupPath2, FileMode.Create, FileAccess.Write, FileShare.None))
+                    {
+
+                        var bytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(sv));
+                        fs.Write(bytes, 0, bytes.Length);
+                        fs.Flush();
+                    }
+
+                }
+
                 // MessageBox.Show("Your bot and message has been saved sucessfully");
 
 
@@ -1575,6 +1609,29 @@ namespace FormattedText
             {
                 // MessageBox.Show("Error - " + er.Message);
             }
+
+        }
+
+        private void txtCol_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (int.Parse(txtCol.Text) > 8)
+                {
+                    txtCol.Text = "8";
+                    MessageBox.Show("The column can not be more than 8");
+                }
+
+            }
+            catch (Exception)
+            {
+
+                txtCol.Text = "1";
+            }
+        }
+
+        private void groupBox3_Enter(object sender, EventArgs e)
+        {
 
         }
     }

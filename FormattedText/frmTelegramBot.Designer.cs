@@ -393,6 +393,7 @@
             this.groupBox3.TabIndex = 24;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "identification";
+            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
             // txtBotToken
             // 
@@ -601,6 +602,7 @@
             this.txtCol.Size = new System.Drawing.Size(39, 20);
             this.txtCol.TabIndex = 13;
             this.txtCol.Text = "1";
+            this.txtCol.TextChanged += new System.EventHandler(this.txtCol_TextChanged);
             // 
             // panel1
             // 
