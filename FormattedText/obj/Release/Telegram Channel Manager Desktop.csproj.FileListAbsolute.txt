@@ -1,0 +1,22 @@
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Release\FormattedText.exe.config
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Release\FormattedText.exe
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Release\FormattedText.pdb
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Release\fa\FormattedText.resources.dll
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Release\Newtonsoft.Json.dll
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Release\RestSharp.dll
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Release\System.Net.Http.Formatting.dll
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Release\Telegram.Bot.dll
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Release\Newtonsoft.Json.xml
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Release\RestSharp.xml
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Release\System.Net.Http.Formatting.xml
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\bin\Release\Telegram.Bot.xml
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\obj\Release\FormattedText.frmAbout.resources
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\obj\Release\FormattedText.frmTelegramBot.resources
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\obj\Release\FormattedText.frmMain.resources
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\obj\Release\FormattedText.Properties.Resources.resources
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\obj\Release\FormattedText.frmMain.fa.resources
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\obj\Release\Telegram Channel Manager Desktop.csproj.GenerateResource.Cache
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\obj\Release\fa\FormattedText.resources.dll
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\obj\Release\FormattedText.exe
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\obj\Release\FormattedText.pdb
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\FormattedText\obj\Release\FormattedText.Resources.Up_Res.resources

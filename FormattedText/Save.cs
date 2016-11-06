@@ -18,12 +18,13 @@ namespace FormattedText
         public byte SendFileMethod { get; set; }
         public byte ParseMode { get; set; }
         public bool IsSilent { get; set; }
-        public bool SendFileIsSilent { get; set; }
         public List<UrlButton> UrlButtons { get; set; }
         public string UrlButtonText { get; set; }
         public string UrlButtonURL { get; set; }
         public string Column { get; set; }
         public bool SendUrlButton { get; set; }
+        public int Offset { get; set; }
+        public List<Chat> Chats { get; set; }
 
     }
 }

@@ -18,13 +18,13 @@ namespace FormattedText
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new Form1());
+                Application.Run(new frmMain());
 
             }
             catch (Exception e)
             {
 
-                MessageBox.Show(e.InnerException.Message);
+                MessageBox.Show(e.Message);
             }
           
         }

@@ -1,0 +1,12 @@
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\Updater\bin\Release\Updater.exe.config
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\Updater\bin\Release\Updater.exe
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\Updater\bin\Release\Updater.pdb
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\Updater\bin\Release\Ionic.Zip.dll
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\Updater\bin\Release\RestSharp.dll
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\Updater\bin\Release\RestSharp.xml
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\Updater\obj\Release\Updater.Properties.Resources.resources
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\Updater\obj\Release\Updater.Updater.resources
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\Updater\obj\Release\Updater.csproj.GenerateResource.Cache
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\Updater\obj\Release\Updater.exe
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\Updater\obj\Release\Updater.pdb
+C:\Users\Kiaksarg\Source\Repos\Telegram-Channel-Manager-Desktop\Updater\obj\Release\Updater.csprojResolveAssemblyReference.cache
