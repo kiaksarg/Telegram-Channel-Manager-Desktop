@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "# Telegram-Channel-Manager-Desktop": send formatted text, URL buttons, file with caption, audio... to Channels, groups and private chats
 
 STEP 1. BUILD YOUR BOT WITH <a href="https://telegram.me/BotFather">BOTFATHER</a>
@@ -7,4 +8,9 @@ STEP 4. SENDING MESSAGES
 
 <p align="center">
   <img src="http://introducing.ir/wp-content/uploads/2016/05/App.jpg"/>
+=======
+"# Telegram-Channel-Manager-Desktop":Your Channel manager to send formatted text, URL buttons, file with caption, audio...
+<p align="center">
+  <img src="http://introducing.ir/wp-content/uploads/2016/05/TCMD-LLL.jpg"/>
+>>>>>>> origin/master
 </p>
