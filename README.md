@@ -12,10 +12,9 @@ DOWNLOAD: <a href="http://introducing.ir/wp-content/uploads/2016/05/Telegram-Cha
 
 <p align="center">
   <img src="http://introducing.ir/wp-content/uploads/2016/05/App.jpg"/>
+    <a href="http://introducing.ir/"><strong>introducing.ir</strong></a>
     </p>
 
-    </br>
-    <p align="center">
-  <a href="http://introducing.ir/"><strong>introducing.ir</strong></a>
+    
 
-  </p>
+
